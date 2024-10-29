@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <style>
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+
+<body style="background-image: url(./assets/pexels-fwstudio-33348-129731.jpg);">
+
+    <div id="all" style="margin-left: 15vw; margin-top: 10vh;">
+        <div class="container" style="display: flex;flex-direction: row;">
+            <div>
+                <input type="text" class="text f-name" placeholder="First Name"
+                    style="border-radius:10px; font-size: 20px;"><br>
+                <span class="first-error error"></span>
+            </div>
+            <div>
+                <input type="text" class="text l-name" placeholder="Last Name"
+                    style="border-radius:10px;font-size: 20px; margin-left: 10px;"><br>
+                <span class="last-error error"></span>
+            </div>
+            <div>
+                <input type="email" class="text e-mail" placeholder="Email"
+                    style="border-radius:10px;font-size: 20px;margin-left: 10px;"><br>
+                <span class="email-error error"></span>
+            </div>
+            <div>
+                <button type="button" id="btn1"
+                    style="border-radius: 10px; background-color: black; color: green; font-size: 20px; width: 125px;margin-left: 10px;">Add</button>
+            </div>
+        </div>
+    </div>
+
+    <button type="button" id="submit-btn"
+        style="border-radius: 10px; background-color: black; color: white; font-size: 20px; width: 125px; margin-left: 15vw; margin-top: 10px;">Submit</button>
+
+    <script>
+        $(document).ready(function () {
+            $("#btn1").click(function () {
+                $("#all").append('<br><div class="container"  style="display: flex;flex-direction: row;">\
+                   <div> <input type="text" class="text f-name" placeholder="First Name" style="border-radius:10px;font-size: 20px;"><br>\
+                    <span class="first-error error"></span></div>\
+                   <div> <input type="text" class="text l-name" placeholder="Last Name" style="border-radius:10px;font-size: 20px;margin-left: 10px;"><br>\
+                    <span class="last-error error"></span></div>\
+                   <div> <input type="email" class="text e-mail" placeholder="Email" style="border-radius:10px;font-size: 20px;margin-left: 10px;"><br>\
+                    <span class="email-error error"></span></div>\
+                   <div> <button class="submit-btn" style="border-radius: 10px; background-color: black; width:125px; color: red; font-size: 20px;margin-left: 10px;">Remove</button></div>\
+                </div>');
+            });
+
+            $("#all").on('click', '.submit-btn', function () {
+                $(this).closest('.container').remove();
+            });
+
+            $("#submit-btn").click(function () {
+                $(".error").text("");
+
+                let isValid = true;
+
+
+                $(".container").each(function () {
+                    const firstName = $(this).find(".f-name").val();
+                    const lastName = $(this).find(".l-name").val();
+                    const email = $(this).find(".e-mail").val();
+
+
+                    // fistname 
+                    if (firstName === "") {
+                        $(this).find(".first-error").text("Please enter first name");
+                        isValid = false;
+                    } else if (firstName.length < 3) {
+                        $(this).find(".first-error").text("Name should be at least 3 letters");
+                        isValid = false;
+                    } else {
+                        $(this).find(".first-error").text("");
+                    }
+
+                    // last name 
+                    if (lastName === "") {
+                        $(this).find(".last-error").text("Please enter last name");
+                        isValid = false;
+                    } else if (lastName.length < 3) {
+                        $(this).find(".last-error").text("Name should be at least 3 letters");
+                        isValid = false;
+                    } else {
+                        $(this).find(".last-error").text("");
+                    }
+
+                    // Email validation
+                    if (email === "") {
+                        $(this).find(".email-error").text("Please enter email");
+                        isValid = false;
+                    } else if (!email.endsWith("@gmail.com")) {
+                        $(this).find(".email-error").text("Email should end with @gmail.com");
+                        isValid = false;
+                    } else {
+                        $(this).find(".email-error").text("");
+                    }
+                });
+
+                if (isValid) {
+                    alert("Form has been submitted");
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
